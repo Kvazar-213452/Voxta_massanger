@@ -35,9 +35,10 @@ export async function register_end(req: Request, res: Response) {
     let code: string = data[0];
 
     if (req.session.code == code) {
-        res.send(1);
+      req.session.login = 1;
+      res.send(1);
     } else {
-        res.send(0);
+      res.send(0);
     }
   } catch (error) {
     console.error(error);
