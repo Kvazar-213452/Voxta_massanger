@@ -1,1 +1,1 @@
-# shop_service
+# notification_service
