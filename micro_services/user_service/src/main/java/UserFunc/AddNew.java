@@ -17,8 +17,8 @@ public class AddNew {
 
     public static void addUserHandler(Context ctx) {
         try {
-            UserDataWrapper userDataWrapper = ctx.bodyAsClass(UserDataWrapper.class);
-            String[] userData = userDataWrapper.data;
+            DataWrapper dataWrapper = ctx.bodyAsClass(DataWrapper.class);
+            String[] userData = dataWrapper.data;
 
             String id = generateId(18);
 
@@ -29,7 +29,7 @@ public class AddNew {
             user.put("gmail", userData[1]);
             user.put("password", userData[2]);
             user.put("time", time);
-            user.put("avatar", "dddqwd");
+            user.put("avatar", "http://localhost:" + dotenv.get("DATA_SERVICE") + "/");
             user.put("id", id);
 
             List<Map<String, Object>> users = new ArrayList<>();

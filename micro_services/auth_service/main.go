@@ -1,73 +1,21 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
+	"auth_service/src"
+	"fmt"
 	"net/http"
-	"time"
+	"os"
 
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/joho/godotenv"
 )
 
-var jwtKey = []byte("secret_key")
-
-type Credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-type Claims struct {
-	Username string `json:"username"`
-	jwt.RegisteredClaims
-}
-
-func generateJWT(username string) (string, error) {
-	expirationTime := time.Now().Add(15 * time.Minute)
-	claims := &Claims{
-		Username: username,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expirationTime),
-			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			Issuer:    "auth-service",
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		return "", err
-	}
-	return tokenString, nil
-}
-
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-	var creds Credentials
-	err := json.NewDecoder(r.Body).Decode(&creds)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
-	if creds.Username != "admin" || creds.Password != "password" {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
-	tokenString, err := generateJWT(creds.Username)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{
-		"token": tokenString,
-	})
-}
-
 func main() {
-	http.HandleFunc("/login", loginHandler)
+	godotenv.Load()
 
-	log.Println("Auth service started on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/login", src.Login)
+	http.HandleFunc("/login_check", src.Login_check)
+	http.HandleFunc("/log_out", src.Log_out)
+
+	fmt.Println("Auth service started on :" + os.Getenv("AUTH_SERVICE"))
+	http.ListenAndServe(":"+os.Getenv("AUTH_SERVICE"), nil)
 }

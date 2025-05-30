@@ -1,5 +1,5 @@
 package voxta.user;
 
-public class UserDataWrapper {
+public class DataWrapper {
     public String[] data;
 }
