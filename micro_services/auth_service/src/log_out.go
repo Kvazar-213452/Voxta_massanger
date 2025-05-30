@@ -7,18 +7,28 @@ import (
 	"os"
 )
 
+var request struct {
+	ID string `json:"id"`
+}
+
 func Log_out(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Отримуємо id з запиту
-	id := r.FormValue("id")
-	if id == "" {
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	if request.ID == "" {
 		http.Error(w, "ID is required", http.StatusBadRequest)
 		return
 	}
+
+	var id string = request.ID
 
 	// Читаємо дані з файлу
 	file, err := os.ReadFile("db.json")

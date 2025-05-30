@@ -1,12 +1,17 @@
 package voxta.user;
 
-import io.javalin.Javalin;
+import io.github.cdimascio.dotenv.Dotenv;
 import io.javalin.http.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -14,6 +19,7 @@ import java.util.*;
 public class AddNew {
     private static final String DB_PATH = "db/user.json";
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Dotenv dotenv = Dotenv.load();
 
     public static void addUserHandler(Context ctx) {
         try {
@@ -21,7 +27,6 @@ public class AddNew {
             String[] userData = dataWrapper.data;
 
             String id = generateId(18);
-
             String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
             Map<String, Object> user = new HashMap<>();
@@ -38,8 +43,9 @@ public class AddNew {
                 users = objectMapper.readValue(dbFile, new TypeReference<List<Map<String, Object>>>() {});
             }
 
-            users.add(user);
+            FuncGlobal.AuthLogin(id);
 
+            users.add(user);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(dbFile, users);
 
             ctx.json(Collections.singletonMap("status", 1));

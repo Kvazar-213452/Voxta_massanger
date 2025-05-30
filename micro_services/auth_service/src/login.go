@@ -14,11 +14,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := r.FormValue("id")
-	if id == "" {
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	if request.ID == "" {
 		http.Error(w, "ID is required", http.StatusBadRequest)
 		return
 	}
+
+	var id string = request.ID
 
 	currentTime := time.Now().Format(time.RFC3339)
 	newLogin := []interface{}{id, currentTime}

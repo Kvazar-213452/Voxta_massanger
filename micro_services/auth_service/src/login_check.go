@@ -14,12 +14,18 @@ func Login_check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Отримуємо id з запиту
-	id := r.FormValue("id")
-	if id == "" {
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	if request.ID == "" {
 		http.Error(w, "ID is required", http.StatusBadRequest)
 		return
 	}
+
+	var id string = request.ID
 
 	// Читаємо дані з файлу
 	file, err := os.ReadFile("db.json")
