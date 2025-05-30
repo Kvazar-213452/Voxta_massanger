@@ -26,7 +26,7 @@ function register() {
         contentType: "application/json",
         data: JSON.stringify({data: [name, pasw, gmail]}),
         success: function (response) {
-            if (response == 1) {
+            if (response.status == 1) {
                 window.location.href = '/register_end';
             }
         }
@@ -42,7 +42,7 @@ function register_end() {
         contentType: "application/json",
         data: JSON.stringify({data: [code]}),
         success: function (response) {
-            if (response == 1) {
+            if (response.status == 1) {
                 window.location.href = '/';
             }
         }

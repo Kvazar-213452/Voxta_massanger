@@ -1,11 +1,12 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import session from 'express-session';
 import path from 'path';
+import dotenv from 'dotenv';
 import getRoutes from './routes/get_routes';
 import postRoutes from './routes/post_routes';
 import CONFIG from './head_com/config';
 
-// index.ts
+dotenv.config();
 
 const app: Express = express();
 

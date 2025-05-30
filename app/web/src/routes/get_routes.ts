@@ -1,12 +1,8 @@
 import { Router, Request, Response } from 'express';
 
-// get_routes.ts
-
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  req.session.login = 1;
-
   if (req.session.login === 1) {
     res.render('index');
   } else {

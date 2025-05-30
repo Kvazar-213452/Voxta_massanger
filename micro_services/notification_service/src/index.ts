@@ -2,13 +2,8 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { send_gmail } from './head_com/gmail';
 
-const PORT: string | number = 3001;
+type ResponseData = string | number | object;
 
-interface ResponseData {
-    status: string;
-    message?: string;
-    version?: string;
-}
 
 dotenv.config();
 
@@ -19,19 +14,19 @@ if (!process.env.VERSION) {
     throw new Error('Missing VERSION in environment variables.');
 }
 
-app.post('/send', async (req: Request, res: Response<ResponseData>) => {
+app.post('/send_gmail', async (req: Request, res: Response<ResponseData>) => {
     try {
         const data = req.body.data;
 
         await send_gmail(data[1], data[0]);
 
-        res.json({ status: 'success', message: 'The text message was sent successfully!' });
+        res.json({ status: 1 });
     } catch (error) {
         console.error(error);
-        res.json({ status: 'error' });
+        res.json({ status: 2 });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(process.env.NOTIFICATION_SERVICE, () => {
+    console.log(`Server running on port ${process.env.NOTIFICATION_SERVICE}`);
 });

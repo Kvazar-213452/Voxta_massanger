@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { generate_code } from './func';
-import CONFIG from '../config';
-
-// register.ts
 
 export async function register_start(req: Request, res: Response) {
   try {
@@ -18,14 +15,14 @@ export async function register_start(req: Request, res: Response) {
     req.session.gmail = gmail;
     req.session.code = code;
 
-    const response = await axios.post(CONFIG.HEAD_SERVER + 'register', {
+    const response = await axios.post(`http://localhost:${process.env.NOTIFICATION_SERVICE}/send_gmail`, {
       data: [gmail, code]
     });
 
-    res.send(1);
+    res.send(response.data);
   } catch (error) {
     console.error(error);
-    res.status(500).send(2);
+    res.json({ status: 2 });
   }
 }
 
@@ -35,13 +32,21 @@ export async function register_end(req: Request, res: Response) {
     let code: string = data[0];
 
     if (req.session.code == code) {
-      req.session.login = 1;
-      res.send(1);
+      const response = await axios.post<{ status: number }>(
+        `http://localhost:${process.env.USER_SERVICE}/add_user`, 
+        { data: [req.session.name, req.session.gmail, req.session.gmail]});
+
+      if (response.data.status === 1) {
+        req.session.login = 1;
+        res.json(response.data);
+      } else {
+        res.json(response.data);
+      }
     } else {
       res.send(0);
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send(2);
+    res.json({ status: 2 });
   }
 }
