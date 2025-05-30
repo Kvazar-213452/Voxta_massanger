@@ -9,7 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtKey = []byte("secret_key") // Секретний ключ, має бути у змінних оточення
+var jwtKey = []byte("secret_key")
 
 type Credentials struct {
 	Username string `json:"username"`
@@ -48,7 +48,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Тут має бути перевірка логіну і пароля (наприклад, з БД)
 	if creds.Username != "admin" || creds.Password != "password" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -60,7 +59,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Віддаємо токен у відповіді
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"token": tokenString,
