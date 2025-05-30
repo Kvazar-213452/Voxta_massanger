@@ -1,9 +1,10 @@
 * text=auto
 
-# lib
-src/web/public/js/lib/**.js linguist-documentation
-src/web/public/css/lib/**.css linguist-documentation
+# app/web
+app/web/src/web/public/js/lib/**.js linguist-documentation
+app/web/src/web/public/css/lib/**.css linguist-documentation
 
+# app/mobile
 app/mobile/**/*.cpp linguist-documentation
 app/mobile/**/*.c linguist-documentation
 app/mobile/**/*.h linguist-documentation
