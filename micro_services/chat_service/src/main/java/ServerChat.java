@@ -4,36 +4,32 @@ import com.mongodb.client.*;
 import org.bson.Document;
 import java.util.Arrays;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import io.javalin.Javalin;
+import io.javalin.json.JavalinJackson;
+
+import voxta.chat.MakeChat;
+import voxta.chat.GetChat;
+import voxta.chat.MsgChat;
+import voxta.chat.DelChat;
+
 public class ServerChat {
     public static void main(String[] args) {
-        // Підключення до MongoDB на localhost
-        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+        Dotenv dotenv = Dotenv.load();
 
-            // Вибір бази даних chats (буде створена автоматично, якщо нема)
-            MongoDatabase database = mongoClient.getDatabase("chats");
+        int port = Integer.parseInt(dotenv.get("CHAT_SERVICE"));
 
-            // Вибір колекції chat (буде створена автоматично, якщо нема)
-            MongoCollection<Document> chatCollection = database.getCollection("chat");
+        Javalin app = Javalin.create(config -> {
+            config.jsonMapper(new JavalinJackson());
+        }).start(port);
 
-            // Створення першого чату
-            Document chat1 = new Document("_id", "chat1")
-                .append("messages", Arrays.asList(
-                    Arrays.asList("343243243333gegrgrg21", "healo")
-                ));
+        // get
+        app.get("/", ctx -> ctx.result("chat service voxta"));
 
-            // Створення другого чату
-            Document chat2 = new Document("_id", "chat2")
-                .append("messages", Arrays.asList(
-                    Arrays.asList("343243243333gegrgrg21", "221433243243243232432423")
-                ));
-
-            // Вставка чатів у колекцію
-            chatCollection.insertMany(Arrays.asList(chat1, chat2));
-
-            System.out.println("Два чати успішно створені у колекції chat.");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // post
+        app.post("/make_chat", MakeChat::Make);
+        app.post("/get_chat", GetChat::Get);
+        app.post("/del_chat", DelChat::Del);
+        app.post("/msg_chat", MsgChat::Msg);
     }
 }
