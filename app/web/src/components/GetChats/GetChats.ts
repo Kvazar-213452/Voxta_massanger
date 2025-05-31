@@ -5,7 +5,7 @@ export async function GetChats(req: Request, res: Response) {
   try {
     const data = req.body.data;
 
-    const response = await axios.post(`http://localhost:${process.env.CHAT_SERVICE}/get_chats`, {
+    const response = await axios.post(`http://localhost:${process.env.CHAT_SERVICE}/get_chat`, {
       data: [req.session.id]
     });
 

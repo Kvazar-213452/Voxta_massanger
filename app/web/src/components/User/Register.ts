@@ -31,11 +31,17 @@ export async function register_end(req: Request, res: Response) {
     const data = req.body.data;
     let code: string = data[0];
 
+    const now = new Date();
+    const localDateTime = now.toLocaleString();
+
     if (req.session.code == code) {
       const response = await axios.post<{ status: number, id: string }>(
         `http://localhost:${process.env.USER_SERVICE}/add_user`, 
-        { data: [req.session.name, req.session.gmail, req.session.gmail]});
+        { data: [req.session.name, req.session.gmail, req.session.gmail, localDateTime]});
 
+        req.session.id = response.data.id;
+        req.session.id = response.data.id;
+        req.session.id = response.data.id;
         req.session.id = response.data.id;
 
       if (response.data.status === 1) {
