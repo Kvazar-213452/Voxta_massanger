@@ -12,6 +12,7 @@ declare module 'express-session' {
     pasw?: string;
     gmail?: string;
     code?: string;
+    id?: string;
 
     login?: number;
   }

@@ -32,9 +32,11 @@ export async function register_end(req: Request, res: Response) {
     let code: string = data[0];
 
     if (req.session.code == code) {
-      const response = await axios.post<{ status: number }>(
+      const response = await axios.post<{ status: number, id: string }>(
         `http://localhost:${process.env.USER_SERVICE}/add_user`, 
         { data: [req.session.name, req.session.gmail, req.session.gmail]});
+
+        req.session.id = response.data.id;
 
       if (response.data.status === 1) {
         req.session.login = 1;

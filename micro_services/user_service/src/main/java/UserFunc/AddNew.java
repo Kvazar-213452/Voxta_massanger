@@ -48,7 +48,7 @@ public class AddNew {
             users.add(user);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(dbFile, users);
 
-            ctx.json(Collections.singletonMap("status", 1));
+            ctx.json(Map.of("status", 1, "id", id));
         } catch (Exception e) {
             e.printStackTrace();
             ctx.json(Collections.singletonMap("status", 0));

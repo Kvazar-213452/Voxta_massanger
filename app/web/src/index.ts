@@ -4,7 +4,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import getRoutes from './routes/get_routes';
 import postRoutes from './routes/post_routes';
-import CONFIG from './head_com/config';
+import CONFIG from './components/config';
 
 dotenv.config();
 
