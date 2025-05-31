@@ -2,56 +2,59 @@ package voxta.user;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.javalin.http.Context;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import io.javalin.http.HttpStatus;
+
+import org.bson.Document;
+
 import java.util.*;
 
 public class AddNew {
-    private static final String DB_PATH = "db/user.json";
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Dotenv dotenv = Dotenv.load();
 
     public static void addUserHandler(Context ctx) {
-        try {
-            DataWrapper dataWrapper = ctx.bodyAsClass(DataWrapper.class);
-            String[] userData = dataWrapper.data;
+        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
 
-            String id = generateId(18);
-            String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            MongoDatabase database = mongoClient.getDatabase("users");
+            MongoCollection<Document> usersCollection = database.getCollection("users");
 
-            Map<String, Object> user = new HashMap<>();
-            user.put("name", userData[0]);
-            user.put("gmail", userData[1]);
-            user.put("password", userData[2]);
-            user.put("time", time);
-            user.put("avatar", "http://localhost:" + dotenv.get("DATA_SERVICE") + "/");
-            user.put("id", id);
+            Map<String, Object> jsonBody = ctx.bodyAsClass(Map.class);
 
-            List<Map<String, Object>> users = new ArrayList<>();
-            File dbFile = new File(DB_PATH);
-            if (dbFile.exists()) {
-                users = objectMapper.readValue(dbFile, new TypeReference<List<Map<String, Object>>>() {});
+            Object messagesObj = jsonBody.get("data");
+            if (!(messagesObj instanceof List<?>)) {
+                ctx.status(HttpStatus.BAD_REQUEST)
+                   .json(Map.of("status", 2, "error", "Missing or invalid 'messages' array"));
+                return;
             }
 
-            FuncGlobal.AuthLogin(id);
+            @SuppressWarnings("unchecked")
+            List<Object> data_res = (List<Object>) messagesObj;
 
-            users.add(user);
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(dbFile, users);
+            String id = generateId(18);
+
+            Document userDoc = new Document("_id", id)
+                    .append("name", data_res.get(0))
+                    .append("gmail",  data_res.get(1))
+                    .append("password",  data_res.get(2))
+                    .append("time", data_res.get(3))
+                    .append("avatar", "http://localhost:" + dotenv.get("DATA_SERVICE") + "/")
+                    .append("desc", "hello");
+
+            usersCollection.insertOne(userDoc);
+
+            FuncGlobal.AuthLogin(id);
 
             ctx.json(Map.of("status", 1, "id", id));
         } catch (Exception e) {
             e.printStackTrace();
-            ctx.json(Collections.singletonMap("status", 0));
+            ctx.json(Map.of("status", 0, "error", e.getMessage()));
         }
     }
 

@@ -1,11 +1,11 @@
 import requests
 import json
 
-url = "http://localhost:5005/del_chat"
+url = "http://localhost:5001/add_user"
 headers = {"Content-Type": "application/json"}
 
 payload = {
-    "data": ["STyul0YSfuc2jYMTTi"]
+    "data": ["dddddd", "33333333", "54565545", "eefwefewfwf"]
 }
 
 response = requests.post(url, headers=headers, data=json.dumps(payload))
