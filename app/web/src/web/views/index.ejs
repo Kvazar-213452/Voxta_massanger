@@ -1,105 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Карта України з районами (GADM)</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
-    <style>
-        body {
-            background-color: #0a0e17;
-            color: #e0e0e0;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        #map {
-            width: 900px;
-            height: 600px;
-            margin: 0 auto;
-            background-color: #0a0e17;
-        }
-        .region {
-            fill: #2A2D31;
-            stroke: #141921;
-            stroke-width: 0.5;
-        }
-        .region:hover {
-            fill: #3a4a6b;
-            cursor: pointer;
-        }
-        .oblast-label {
-            font-size: 10px;
-            fill: #e0e0e0;
-            text-anchor: middle;
-            pointer-events: none;
-            font-weight: bold;
-        }
-        h1 {
-            text-align: center;
-            color: #e0e0e0;
-            margin-bottom: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlertUA ultra</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <h1>Карта України з районами</h1>
-    <div id="map"></div>
+    <div id="map-container">
 
-<script>
-Promise.all([
-  fetch('gadm41_UKR_1.json').then(res => res.json()), // області
-  fetch('gadm41_UKR_2.json').then(res => res.json())  // райони
-]).then(([adm1, adm2]) => {
-  const svg = d3.select("#map")
-    .append("svg")
-    .attr("width", 900)
-    .attr("height", 600);
+        <div id="map"></div>
+    </div>
 
-  const projection = d3.geoMercator()
-    .scale(2500)
-    .center([31, 48.5])
-    .translate([450, 300]);
-
-  const path = d3.geoPath().projection(projection);
-
-  // Малюємо райони
-  svg.selectAll(".region")
-    .data(adm2.features)
-    .enter()
-    .append("path")
-    .attr("class", "region")
-    .attr("d", path);
-
-  // Малюємо області контурами
-  svg.selectAll(".oblast")
-    .data(adm1.features)
-    .enter()
-    .append("path")
-    .attr("class", "oblast")
-    .attr("d", path)
-    .attr("fill", "none")
-    .attr("stroke", d => {
-      // Якщо Севастополь, малюємо сірим
-      return d.properties.NAME_1 === "Sevastopol" ? "#555" : "green";
-    })
-    .attr("stroke-width", 1);
-
-  // Малюємо назви областей (крім Севастополя)
-  svg.selectAll(".oblast-label")
-    .data(adm1.features.filter(d => d.properties.NAME_1 !== "Sevastopol"))
-    .enter()
-    .append("text")
-    .attr("class", "oblast-label")
-    .attr("transform", d => {
-      const centroid = path.centroid(d);
-      return `translate(${centroid[0]}, ${centroid[1]})`;
-    })
-    .text(d => d.properties.NAME_1);
-});
-</script>
-
-
-
-
+    <div class="menu">
+        <div class="menu_item"><img src="/img/question.png"></div>
+        <div class="menu_item"><img src="/img/question.png"></div>
+        <div class="menu_item"><img src="/img/question.png"></div>
+        <div class="menu_item"><img src="/img/question.png"></div>
+        <div class="menu_item"><img src="/img/question.png"></div>
+    </div>
 </body>
+<!-- script -->
+<script src="/js/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/lib/d3.v7.min.js"></script>
+<script src="/js/lib/d3-geo-projection.v4.min.js"></script>
+<script src="/js/main.js"></script>
 </html>

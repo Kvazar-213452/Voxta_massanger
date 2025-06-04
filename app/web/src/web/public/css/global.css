@@ -1,35 +1,18 @@
-/* global.css */
-
 @font-face {
   font-family: "MyCustomFont";
-  src: url("../fonts/consolas.ttf") format("truetype");
-}
-
-main {
-  color: #fff;
-  background-color: #222531;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  font-size: 15px;
-  margin: 0;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
+  src: url("/Minecraft_1.1.ttf") format("truetype");
 }
 
 * {
   margin: 0;
   padding: 0;
+  font-weight: normal !important;
   font-family: "MyCustomFont", sans-serif;
 }
 
 a {
   color: #fff;
   text-decoration: none;
-}
-
-.pading {
-  padding: 20px;
 }
 
 /* 

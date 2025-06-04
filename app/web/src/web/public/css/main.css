@@ -9,5 +9,97 @@ body {
     --bg_2: #141921;
     --bg_3: #3B4351;
     --bg_4: #3F4246;
+
+    --bg_5: #181822;
+    --bg_6: #22222E;
+    --bg_7: #68FF9D;
+    --bg_8: #FF5C5C;
+
+    --bg_6: #252831;
+    --bg_6: #2d2d3d;
+    --bg_6: #0a0a0a;
+
+    --bg: #252536;
 }
 
+body {
+    background-color: #181822;
+    color: #e0e0e0;
+}
+
+#map-container {
+    width: 1200px;
+    height: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.region {
+    fill: #252831;
+    stroke: #1f1f2c;
+    stroke-width: 0.3;
+}
+
+.region:hover {
+    fill: #2d2d3d;
+    cursor: pointer;
+}
+
+.oblast-border {
+    fill: none;
+    stroke: #0a0a0a;   /*---------------------------- */
+    stroke-width: 1.2;
+    pointer-events: none;
+}
+
+.oblast-label {
+    font-size: 12px;
+    fill: #e0e0e0;
+    text-anchor: middle;
+    pointer-events: none;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+}
+
+
+
+
+
+.menu {
+    background-color: #22222E;
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    bottom: 0px;
+    left: 0%;
+    display: flex;
+    justify-content: center;
+}
+
+.menu_item {
+    position: relative;
+    float: left;
+    height: 50px;
+    width: 50px;
+    background-color: #2d2d3d;
+    top: 10px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.menu_item img {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: invert(80%);
+}
