@@ -3,11 +3,7 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  // if (req.session.login === 1) {
     res.render('index');
-  // } else {
-  // res.render('login/login');
-  // }
 });
 
 router.get('/login', (req: Request, res: Response) => {

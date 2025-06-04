@@ -5,35 +5,9 @@ body {
 }
 
 :root {
-    --bg_1: #1A1C20;
-    --bg_1: #1F222C;
-    --bg_1: #20222F;
-    --bg_1: #20222F;
-    --bg_1: #1A1C20;
-    --bg_1: #1A1C20;
-    --bg_1: #222531;
+    --bg_1: #2A2D31;
+    --bg_2: #141921;
+    --bg_3: #3B4351;
+    --bg_4: #3F4246;
 }
 
-.channel_div {
-    background-color: #222531;
-    height: 100%;
-    width: 70px;
-    position: relative;
-    float: left;
-}
-
-.chats_div {
-    position: relative;
-    float: left;
-    background-color: #191b23;
-    height: 100%;
-    width: 350px;
-}
-
-.div_top {
-    position: relative;
-    background-color: #12141b;
-    width: calc(100% - 420px);
-    height: 60px;
-    float: left;
-}
