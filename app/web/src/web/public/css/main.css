@@ -43,24 +43,6 @@ body {
     height: 100%;
 }
 
-.region {
-    fill: #252831;
-    stroke: #1f1f2c;
-    stroke-width: 0.3;
-}
-
-.region:hover {
-    fill: #2d2d3d;
-    cursor: pointer;
-}
-
-.oblast-border {
-    fill: none;
-    stroke: #0a0a0a;   /*---------------------------- */
-    stroke-width: 1.2;
-    pointer-events: none;
-}
-
 .oblast-label {
     font-size: 12px;
     fill: #e0e0e0;
@@ -68,6 +50,18 @@ body {
     pointer-events: none;
     font-weight: bold;
     text-shadow: 1px 1px 2px #000;
+}
+
+.oblast-border {
+    fill: none;
+    stroke: #000000;
+    stroke-width: 1px;
+    fill: #252831;
+}
+
+.oblast-highlighted {
+    fill: #68FF9D;
+    opacity: 0.8;
 }
 
 /* menu *//* menu *//* menu *//* menu *//* menu *//* menu *//* menu *//* menu */
@@ -137,3 +131,6 @@ body {
 .title_slide:hover {
     opacity: 0.7;
 }
+
+
+
