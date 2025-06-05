@@ -1,4 +1,29 @@
-Promise.all([
+const swiper = new Swiper('.mySwiper', {
+  loop: false,
+  effect: 'fade',
+  fadeEffect: { crossFade: true },
+  allowTouchMove: false,
+  // autoHeight: false, // Вимкнути авто-висоту!
+  navigation: false,
+  pagination: false,
+  on: {
+    init: function() {
+      // Ініціалізувати карту тільки для першого слайда
+      if(this.activeIndex === 0) {
+        initMap();
+      }
+    },
+    slideChange: function() {
+      // При зміні слайда перераховуємо карту
+      if(this.activeIndex === 0) {
+        setTimeout(initMap, 300); // Чекаємо завершення анімації
+      }
+    }
+  }
+});
+
+function initMap() {
+  Promise.all([
     fetch('/geojson/gadm41_UKR_1.json').then(res => res.json()), // області
     fetch('/geojson/gadm41_UKR_2.json').then(res => res.json())  // райони
 ]).then(([oblastsData, districtsData]) => {
@@ -88,8 +113,18 @@ Promise.all([
     document.getElementById('map').innerHTML = 
         '<div style="color:red;text-align:center;padding-top:300px">Помилка завантаження картографічних даних</div>';
 });
+}
 
-
+// Викликати initMap() при завантаженні, якщо перший слайд активний
+document.addEventListener('DOMContentLoaded', function() {
+  if(document.querySelector('.swiper-slide-active')?.contains(document.getElementById('map-container'))) {
+    initMap();
+  }
+});
+function slideTo_swiper(data) {
+    console.log("Ddddd")
+    swiper.slideTo(data);
+}
 
 
 
@@ -104,3 +139,4 @@ function load_chat() {
         }
     });
 }
+

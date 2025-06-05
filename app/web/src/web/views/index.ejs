@@ -4,26 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlertUA ultra</title>
+    <link rel="stylesheet" href="/css/lib/swiper-bundle.min.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <div id="map-container">
-
-        <div id="map"></div>
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <div id="map-container"><div id="map"></div></div>
     </div>
+    <div class="swiper-slide">Секція 2</div>
+    <div class="swiper-slide">Секція 3</div>
+    <div class="swiper-slide">Секція 4</div>
+    <div class="swiper-slide">Секція 5</div>
+  </div>
+</div>
 
-    <div class="menu">
-        <div class="menu_item"><img src="/img/question.png"></div>
-        <div class="menu_item"><img src="/img/question.png"></div>
-        <div class="menu_item"><img src="/img/question.png"></div>
-        <div class="menu_item"><img src="/img/question.png"></div>
-        <div class="menu_item"><img src="/img/question.png"></div>
-    </div>
+<div class="menu">
+  <div class="menu_item" onclick="slideTo_swiper(0)"><%- include('components/img/map') %></div>
+  <div class="menu_item" onclick="slideTo_swiper(1)"><%- include('components/img/question') %></div>
+  <div class="menu_item" onclick="slideTo_swiper(2)"><%- include('components/img/question') %></div>
+  <div class="menu_item" onclick="slideTo_swiper(3)"><%- include('components/img/question') %></div>
+  <div class="menu_item" onclick="slideTo_swiper(4)"><%- include('components/img/question') %></div>
+</div>
 </body>
 <!-- script -->
 <script src="/js/lib/jquery-3.6.0.min.js"></script>
 <script src="/js/lib/d3.v7.min.js"></script>
 <script src="/js/lib/d3-geo-projection.v4.min.js"></script>
+<script src="/js/lib/swiper-bundle.min.js"></script>
 <script src="/js/main.js"></script>
 </html>

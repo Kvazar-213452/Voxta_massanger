@@ -3,6 +3,7 @@
 # app/web
 app/web/src/web/public/js/lib/**.js linguist-documentation
 app/web/src/web/public/css/lib/**.css linguist-documentation
+app/web/src/web/views/components/img/**.ejs linguist-documentation
 
 # app/mobile
 app/mobile/**/*.cpp linguist-documentation
