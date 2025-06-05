@@ -3,7 +3,7 @@
 body {
     overflow: hidden;
 }
-
+/* #546A6A */
 :root {
     --bg_1: #2A2D31;
     --bg_2: #141921;
@@ -95,14 +95,7 @@ body {
     margin-left: 20px;
 }
 
-.menu_item:hover  {
-    border-bottom: solid 3px #68FF9D;
-}
-
-.menu_item:hover .menu_svg path  {
-    filter: invert(100%);
-    fill: #68FF9D;
-}
+.menu_item:hover .menu_svg path  {fill: #5abe7d;}
 
 .menu_item .menu_svg {
     height: 40px;
@@ -111,12 +104,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    filter: invert(80%);
 }
 
-.menu_item.active {
-  background-color: #68FF9D;
-}
+.menu_item .menu_svg path {fill: #c2c2c2;}
+
+.menu_item.active .menu_svg path {fill: #68FF9D;}
+.menu_item.active {border-bottom: solid 3px #68FF9D;}
 
 /* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper */
 /* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper *//* swiper */
@@ -125,9 +118,22 @@ body {
 .swiper {
     height: calc(100vh - 70px);
     width: 100%;
+    z-index: 1;
 }
 
 .swiper-slide {
     height: 100%;
     overflow: hidden;
+}
+
+.title_slide {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.title_slide:hover {
+    opacity: 0.7;
 }

@@ -15,6 +15,10 @@ a {
   text-decoration: none;
 }
 
+.main_color {
+  color: #68FF9D;
+}
+
 /* 
   text-decoration: underline;
   text-decoration-thickness: 2px;

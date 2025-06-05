@@ -119,13 +119,35 @@ function initMap() {
 document.addEventListener('DOMContentLoaded', function() {
   if(document.querySelector('.swiper-slide-active')?.contains(document.getElementById('map-container'))) {
     initMap();
+    document.querySelector('.menu_item[data-slide="0"]').classList.add('active');
   }
 });
-function slideTo_swiper(data) {
-    console.log("Ddddd")
-    swiper.slideTo(data);
-}
 
+document.querySelectorAll('.menu_item').forEach(item => {
+  item.addEventListener('click', () => {
+    // Видалити клас active з усіх елементів меню
+    document.querySelectorAll('.menu_item').forEach(i => i.classList.remove('active'));
+    
+    // Додати клас active до поточного елементу
+    item.classList.add('active');
+    
+    // Перейти до відповідного слайду
+    const slideIndex = parseInt(item.getAttribute('data-slide'));
+    swiper.slideTo(slideIndex);
+  });
+});
+
+// Додаємо обробник зміни слайда, щоб оновлювати активний пункт меню
+swiper.on('slideChange', function() {
+  // Видалити клас active з усіх елементів
+  document.querySelectorAll('.menu_item').forEach(item => {
+    item.classList.remove('active');
+  });
+  
+  // Додати клас active до відповідного пункту меню
+  const activeSlideIndex = swiper.activeIndex;
+  document.querySelector(`.menu_item[data-slide="${activeSlideIndex}"]`).classList.add('active');
+});
 
 
 function load_chat() {
