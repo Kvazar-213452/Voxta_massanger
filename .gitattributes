@@ -1,18 +1,13 @@
 * text=auto
 
-# app/web
-app/web/src/web/public/js/lib/**.js linguist-documentation
-app/web/src/web/public/css/lib/**.css linguist-documentation
-app/web/src/web/views/components/img/**.ejs linguist-documentation
+# app
+app/**/*.cpp linguist-documentation
+app/**/*.c linguist-documentation
+app/**/*.h linguist-documentation
+app/**/*.hpp linguist-documentation
+app/**/*.cc linguist-documentation
+app/**/*.swift linguist-documentation
+app/**/*.cmake linguist-documentation
+app/web/**/*.html linguist-documentation
 
-# app/mobile
-app/mobile/**/*.cpp linguist-documentation
-app/mobile/**/*.c linguist-documentation
-app/mobile/**/*.h linguist-documentation
-app/mobile/**/*.hpp linguist-documentation
-app/mobile/**/*.cc linguist-documentation
-app/mobile/**/*.swift linguist-documentation
-app/mobile/**/*.cmake linguist-documentation
-app/mobile/web/**/*.html linguist-documentation
-
-app/mobile/**/CMakeLists.txt linguist-documentation
+app/**/CMakeLists.txt linguist-documentation
